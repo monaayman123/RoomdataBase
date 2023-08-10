@@ -65,21 +65,25 @@ class MainActivity : ComponentActivity() {
                         Spacer(modifier = Modifier.height(12.dp))
                         Button(onClick = {
                             val student=Student(name=name,age=age,college=college)
+                            if(studentDao.getStudentWithName("mona")!=name)
                             studentDao.insertStudent(student)
+                            else{
+                                val list=   studentDao.getAllStudent()
+                              studentDao.updatStudent(list[0].copy(age=8))
+                            }
                         }) {
                             Text(text = "insert")
                         }
                         Spacer(modifier = Modifier.height(12.dp))
                         Button(onClick = {
-                            val student=Student(name=name,age=age,college=college)
-                            studentDao.deleteStudent(student  )
+
+                            studentDao.deleteStudent("mona" )
                         }) {
                             Text(text = "delete")
                         }
                         Spacer(modifier = Modifier.height(12.dp))
                         Button(onClick = {
-                            val list=   studentDao.getAllStudent()
-                            list[0].copy(age=8)
+
                             data=studentDao.getAllStudent().joinToString ("\n" )
 
                         }) {
